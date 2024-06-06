@@ -69,5 +69,52 @@ def mostrar_modelo_regresion(df, selected_tickers, compare_ticker):
         y_pred = model.predict(X_test)
         mse = mean_squared_error(y_test, y_pred)
         st.write(f'Error Cuadrático Medio: {mse}')
-
         
+        # Análisis del modelo y conclusión
+        def analizar_y_concluir(model):
+            st.subheader("Análisis del Modelo y Conclusión")
+            
+            # Obtener el resumen del modelo
+            summary = model.summary2().tables[1]
+            
+            # Análisis R-cuadrado
+            r_squared = model.rsquared
+            st.write(f'**R-cuadrado:** {r_squared:.4f}')
+            if r_squared >= 0.8:
+                st.write("El modelo tiene un buen ajuste.")
+            elif 0.5 <= r_squared < 0.8:
+                st.write("El modelo tiene un ajuste moderado.")
+            else:
+                st.write("El modelo tiene un ajuste pobre.")
+            
+            # Análisis P-valores
+            significant_vars = summary[summary['P>|t|'] < 0.05].index.tolist()
+            st.write(f'**Variables significativas:** {significant_vars}')
+            if not significant_vars:
+                st.write("No hay variables significativas en el modelo.")
+            
+            # Análisis de los coeficientes
+            st.write(f'**Coeficientes del modelo:**')
+            st.dataframe(summary[['Coef.', 'P>|t|', '[0.025', '0.975]']])
+
+            # Conclusión basada en el análisis
+            conclusion = "Conclusión del Modelo:\n\n"
+            conclusion += f"El R-cuadrado del modelo es {r_squared:.4f}, "
+            if r_squared >= 0.8:
+                conclusion += "lo que indica que el modelo tiene un buen ajuste a los datos. "
+            elif 0.5 <= r_squared < 0.8:
+                conclusion += "lo que indica que el modelo tiene un ajuste moderado a los datos. "
+            else:
+                conclusion += "lo que indica que el modelo tiene un ajuste pobre a los datos. "
+
+            if significant_vars:
+                conclusion += f"Las siguientes variables son significativas: {', '.join(significant_vars)}. "
+            else:
+                conclusion += "No hay variables significativas en el modelo. "
+
+            conclusion += "Recomendamos revisar las variables utilizadas y considerar la inclusión de otras variables que puedan mejorar el modelo."
+
+            st.write(conclusion)
+        
+        # Llamada a la función de análisis y conclusión
+        analizar_y_concluir(model)
