@@ -81,3 +81,5 @@ with st.expander("Graficas", expanded=False):
 from FuncionesProyecto import mostrar_modelo_regresion
 mostrar_modelo_regresion(df, selected_tickers, compare_ticker)
 
+
+
