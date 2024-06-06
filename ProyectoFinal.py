@@ -1,23 +1,11 @@
 import streamlit as st
 import pandas as pd
 import numpy as np 
-# Import the os module to run shell commands
-import os
-# Install yfinance
-os.system('pip install yfinance')
 import yfinance as yf
-# Install statsmodels
-os.system('pip install statsmodels')
 import statsmodels.api as sm
-# Install scikit-learn
-os.system('pip install scikit-learn')
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
-# Install matplotlib
-os.system('pip install matplotlib')
 import matplotlib.pyplot as plt
-# Install seaborn
-os.system('pip install seaborn')
 import seaborn as sns
 
 # Diccionario de nombres de acciones por ticker
